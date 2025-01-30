@@ -1,6 +1,7 @@
 package ca.sait.crs.services;
 
 import ca.sait.crs.contracts.Course;
+import ca.sait.crs.factories.CourseFactory;
 import ca.sait.crs.models.OptionalCourse;
 import ca.sait.crs.models.RequiredCourse;
 
@@ -68,7 +69,7 @@ public class CourseService {
         File file = new File(COURSES_CSV);
         Scanner scanner = new Scanner(file);
 
-        // TODO: Create instance of CourseFactory
+        CourseFactory courseFactory = new CourseFactory();
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -82,16 +83,14 @@ public class CourseService {
             String code = parts[0];
             String name = parts[1];
             int credits = Integer.parseInt(parts[2]);
-
-            // TODO: Call build() method in CourseFactory instance to handle validating parameters and creating new Course object.
-            // TODO: Catch and handle CannotCreateCourseException.
-
             Course course;
 
-            if (credits > 0) {
-                course = new RequiredCourse(code, name, credits);
-            } else {
-                course = new OptionalCourse(code, name);
+            try {
+                course = courseFactory.build(code, name, credits);
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+                System.out.println("Please try again.");
+                return;               
             }
 
             this.courses.add(course);
