@@ -36,7 +36,7 @@ public class RegistrationFactory {
             throw new CannotCreateRegistrationException("Student is invalid.");
         }
 
-        return null;
+        return new Registration(course, student);
     }
 
     /**
@@ -45,7 +45,9 @@ public class RegistrationFactory {
      * @return True if course is valid.
      */
     private boolean validateCourse(Course course) {
-        // TODO: Add logic to test course is valid.
+        if (course == null) {
+            return false;
+        }
         return true;
     }
 
@@ -55,7 +57,9 @@ public class RegistrationFactory {
      * @return True if student is valid.
      */
     private boolean validateStudent(Student student) {
-        // TODO: Add logic to test student is valid.
+        if (student == null) {
+            return false;
+        }
         return true;
     }
 }

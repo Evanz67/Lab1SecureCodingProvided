@@ -83,14 +83,13 @@ public class CourseService {
             String code = parts[0];
             String name = parts[1];
             int credits = Integer.parseInt(parts[2]);
-            Course course;
+            Course course = null;
 
             try {
                 course = courseFactory.build(code, name, credits);
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 System.out.println("Please try again.");
-                return;               
             }
 
             this.courses.add(course);

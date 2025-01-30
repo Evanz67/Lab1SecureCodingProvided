@@ -18,12 +18,10 @@ public class CourseRegistrationSystem {
 
     private final CourseService courseService;
     private final RegistrationService registrationService;
-    private final StudentFactory studentFactory;
 
     public CourseRegistrationSystem() throws FileNotFoundException {
         this.scanner = new Scanner(System.in);
         this.courseService = new CourseService();
-        this.studentFactory = new StudentFactory();
 
         // TODO: Wrap RealRegistrationService using your ProxyRegistrationService
         // DO NOT MODIFY ANYTHING ELSE IN THIS FILE!
@@ -114,7 +112,7 @@ public class CourseRegistrationSystem {
      * Registers a student with a course.
      */
     private void register() {
-        // TODO: Create instance of StudentFactory.
+        StudentFactory studentFactory = new StudentFactory();;
 
         System.out.print("Enter course code: ");
         String courseCode = this.scanner.nextLine();
@@ -130,7 +128,6 @@ public class CourseRegistrationSystem {
         //Ensures that student GPA is above 2.0, if not then fail to register
         if (studentGpa > 2.0) {
             try {
-                // TODO: Call build() method in StudentFactory instance to handle validating parameters and creating new Student object.
                 studentFactory.build(studentName, studentGpa);
                 Student student = new ca.sait.crs.models.Student(studentName, studentGpa);
     

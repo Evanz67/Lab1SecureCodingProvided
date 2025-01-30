@@ -35,7 +35,7 @@ public class StudentFactory {
      * @return True if name is valid
      */
     private boolean validateName(String name) {
-        return name.matches("^[A-Za-z-]+$");
+        return name.matches("^[A-Za-z\\s-]+$");
     }
 
     /**
