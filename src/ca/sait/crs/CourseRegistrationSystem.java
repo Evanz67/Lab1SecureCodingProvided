@@ -125,23 +125,17 @@ public class CourseRegistrationSystem {
         System.out.print("Enter student GPA: ");
         double studentGpa = this.scanner.nextDouble();
 
-        //Ensures that student GPA is above 2.0, if not then fail to register
-        if (studentGpa > 2.0) {
-            try {
-                studentFactory.build(studentName, studentGpa);
-                Student student = new ca.sait.crs.models.Student(studentName, studentGpa);
-    
-                Registration registration = this.registrationService.register(student, course);
-    
-                System.out.println("Student \"" + registration.getStudent() + "\" has been registered in \"" + registration.getCourse() + "\" course.");
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-                System.out.println("Please try again.");
-                return;
-            }
-        }
-        else {
-            System.out.println("Student GPA does not meet the requirements");
-        }    
+        try {
+            studentFactory.build(studentName, studentGpa);
+            Student student = new ca.sait.crs.models.Student(studentName, studentGpa);
+
+            Registration registration = this.registrationService.register(student, course);
+
+            System.out.println("Student \"" + registration.getStudent() + "\" has been registered in \"" + registration.getCourse() + "\" course.");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Please try again.");
+            return;
+        }        
     }
 }
