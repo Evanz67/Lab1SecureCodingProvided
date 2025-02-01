@@ -25,7 +25,7 @@ public class CourseRegistrationSystem {
 
         // TODO: Wrap RealRegistrationService using your ProxyRegistrationService
         // DO NOT MODIFY ANYTHING ELSE IN THIS FILE!
-        this.registrationService = new RealRegistrationService();
+        this.registrationService = new ProxyRegistrationService();
     }
 
     /**
