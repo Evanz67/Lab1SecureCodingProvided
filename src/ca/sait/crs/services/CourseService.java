@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @author Nick Hamnett <nick.hamnett@sait.ca>
  * @since June 1, 2023
  */
-public class CourseService {
+public final class CourseService {
     /**
      * Path to courses.csv file.
      */
@@ -26,7 +26,7 @@ public class CourseService {
     /**
      * Holds Course instances.
      */
-    private ArrayList<Course> courses;
+    private final ArrayList<Course> courses;
 
     /**
      * Initializes CourseService instance
@@ -34,7 +34,6 @@ public class CourseService {
      */
     public CourseService() throws FileNotFoundException {
         this.courses = new ArrayList<>();
-
         this.load();
     }
 
@@ -44,21 +43,18 @@ public class CourseService {
      * @return Course instance or null if not found.
      */
     public Course find(String code) {
-        for (Course course : this.courses) {
-            if (course.getCode().equals(code)) {
-                return course;
-            }
-        }
-
-        return null;
+        return this.courses.stream()
+                .filter(course -> course.getCode().equals(code))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
      * Gets copy of courses array list.
-     * @return Array list of courses.
+     * @return A new ArrayList containing all courses.
      */
     public ArrayList<Course> getCourses() {
-        return this.courses;
+        return new ArrayList<>(this.courses); // Corrected
     }
 
     /**
@@ -73,7 +69,6 @@ public class CourseService {
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-
             String[] parts = line.split(",");
 
             if (parts.length != 3) {
@@ -83,16 +78,15 @@ public class CourseService {
             String code = parts[0];
             String name = parts[1];
             int credits = Integer.parseInt(parts[2]);
-            Course course = null;
 
             try {
-                course = courseFactory.build(code, name, credits);
-            } catch (Exception e) {
+                Course course = courseFactory.build(code, name, credits);
+                if (course != null) {
+                    this.courses.add(course);
+                }
+            } catch (CannotCreateCourseException e) {
                 System.out.println("Error: " + e.getMessage());
-                System.out.println("Please try again.");
             }
-
-            this.courses.add(course);
         }
 
         scanner.close();
