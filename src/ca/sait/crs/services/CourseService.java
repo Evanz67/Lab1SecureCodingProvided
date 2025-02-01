@@ -84,7 +84,7 @@ public final class CourseService {
                 if (course != null) {
                     this.courses.add(course);
                 }
-            } catch (CannotCreateCourseException e) {
+            } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
